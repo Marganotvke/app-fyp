@@ -1,38 +1,40 @@
-import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
+import NextAuth from 'next-auth'
+import CredentialsProvider from "next-auth/providers/credentials";
 
-const isCorrectCredentials = (credentials) =>
-    credentials.username === process.env.NEXTAUTH_USERNAME &&
-    credentials.password === process.env.NEXTAUTH_PASSWORD;
+const checkCred = (credentials) => {
+    return credentials.email == process.env.NEXTAUTH_EMAIL &&
+    credentials.password == process.env.NEXTAUTH_PASSWORD;
+}
 
-const options = {
-  // Configure one or more authentication providers
+export const authOptions = {
+    session: {
+        strategy: "jwt",
+    },
+    pages: {
+        signIn: "/login",
+    },
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
-        Providers.Credentials({
-        // The name to display on the sign in form (e.g. 'Sign in with...')
+        CredentialsProvider({
             name: "Credentials",
-        // The credentials is used to generate a suitable form on the sign in page.
-        // You can specify whatever fields you are expecting to be submitted.
-        // e.g. domain, username, password, 2FA token, etc.
             credentials: {
-                username: { label: "Username", type: "text", placeholder: "jsmith" },
+                email: {
+                label: "Email",
+                type: "text",
+                },
                 password: { label: "Password", type: "password" },
             },
-            authorize: async (credentials) => {
-                if (isCorrectCredentials(credentials)) {
-                    const user = { id: 1, name: "Admin" };
-                // Any object returned will be saved in `user` property of the JWT
-                    return Promise.resolve(user);
-                } else {
-                // If you return null or false then the credentials will be rejected
-                    return Promise.resolve(null);
-                // You can also Reject this callback with an Error or with a URL:
-                // return Promise.reject(new Error('error message')) // Redirect to error page
-                // return Promise.reject('/path/to/redirect')        // Redirect to a URL
+            async authorize(credentials) {
+                if (checkCred(credentials)) {
+                    return true;
+                }else{
+                    return null;
                 }
             },
         }),
     ],
 };
 
-export default (req, res) => NextAuth(req, res, options);
+const handler=NextAuth(authOptions)
+
+export {handler as GET , handler as POST}
