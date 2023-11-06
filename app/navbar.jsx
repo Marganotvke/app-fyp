@@ -1,7 +1,6 @@
 'use client'
 import Link from 'next/link'
 import { signIn, signOut, useSession } from 'next-auth/react'
-import { useEffect } from 'react';
 
 export default function Navbar({ }) {
     const { session, status } = useSession();
@@ -21,7 +20,7 @@ export default function Navbar({ }) {
             <Link href="/">FYP</Link>
             </div>
             <div className='flex flex-row gap-5 items-center text-xl justify-center'>
-                <Link href="/catalog" className='hover:border-b'>Catalog</Link>
+                <Link href="/catalogue" className='hover:border-b'>Catalogue</Link>
                 <Link href="/chat" className='hover:border-b'>Chat</Link>
             </div>
                 <button onClick={() => handleLogin()} className='block border rounded border-gray-400 px-3 py-2 hover:bg-gray-400 hover:text-gray-600'>
