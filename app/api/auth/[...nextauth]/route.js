@@ -1,19 +1,21 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from "next-auth/providers/credentials";
-
-const checkCred = (credentials) => {
-    return credentials.email == process.env.NEXTAUTH_EMAIL &&
-    credentials.password == process.env.NEXTAUTH_PASSWORD;
-}
+import { supabase } from '@/supabaseClient';
 
 export const authOptions = {
     session: {
         strategy: "jwt",
     },
+
     pages: {
         signIn: "/login",
     },
-    secret: process.env.NEXTAUTH_SECRET,
+
+    jwt: {
+        secret: process.env.JWT_SECRET,
+    },
+    secret: process.env.JWT_SECRET,
+
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -24,15 +26,38 @@ export const authOptions = {
                 },
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials) {
-                if (checkCred(credentials)) {
-                    return true;
-                }else{
-                    return null;
+            async authorize(credentials, req) {
+                const { data, error } = await supabase
+                    .from('users')
+                    .select()
+                    .eq('email', credentials.email)
+                    .limit(1)
+
+                if (data && data.length > 0){
+                    if (data[0].password === credentials.password){
+                        return {
+                            name: data[0].username,
+                            email: data[0].email,
+                            id: data[0].id,
+                            image: data[0].image,
+                        }
+                    }
                 }
+                return null;
             },
         }),
     ],
+
+    // callbacks: {
+    //     session({ session, user }) {
+    //         if (session.user && user) {
+    //             session.user.id = user.id
+    //             session.user.mobile = user.mobile
+    //         }
+    //         return session
+    //     } 
+    // }
+
 };
 
 const handler=NextAuth(authOptions)

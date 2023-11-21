@@ -5,7 +5,6 @@ import { NextAuthProvider } from './NextAuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
-
 export const metadata = {
   title: 'FYP App',
 }
