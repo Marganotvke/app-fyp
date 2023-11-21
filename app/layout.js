@@ -13,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-        <body className={`${inter.className} bg-gray-900 text-slate-200 mx-auto`}>
+        <body className={`${inter.className} bg-gray-900 text-slate-200 mx-auto scrollbar-none`}>
             <NextAuthProvider>
             <Navbar />
             {children}
