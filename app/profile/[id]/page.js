@@ -2,8 +2,8 @@ import { supabase } from "@/supabaseClient";
 import { use } from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import UserProfile from "./userProfile";
-import UserSchedule from "./userSchedule";
+import UserProfile from "./_userProfileComponent/userProfile";
+import UserSchedule from "./_userProfileComponent/userSchedule";
 import { redirect } from "next/navigation";
 
 async function fetchUserInfo(){
@@ -16,7 +16,6 @@ async function fetchUserInfo(){
         .eq("email", email)
 
     if (data && data.length > 0){
-        console.log(data);
         return data;
     }else{
         return error;

@@ -22,16 +22,21 @@ function cardFromScheduleItem(targetYear, item, idx, cid, func){
 export default function UserSchedule( { schedules } ){
     const [cid, setCID] = useState(-1);
     const [targetYear, setTargetYear] = useState(2023);
+    const [startYear, endYear] = [2015, 2030];
     const handleCID = (id) => {
         setCID(id);
     }
 
     const backYear = () => {
-        setTargetYear(targetYear-1);
+        const destYear = targetYear-1;
+        if (destYear < startYear) return;
+        setTargetYear(destYear);
         setCID(-1);
     }
 
     const forwardYear = () => {
+        const destYear = targetYear+1;
+        if (destYear > endYear) return;
         setTargetYear(targetYear+1);
         setCID(-1);
     }
@@ -46,10 +51,10 @@ export default function UserSchedule( { schedules } ){
     const schedule = schedules[0].schedule;
     return <>
         <h1 className="text-3xl font-light p-5">Your current schedule:</h1>
-        <div className="flex items-center justify-center w-full">
-            <button onClick={backYear} className="p-5 text-3xl font-light">{"<"}</button>
+        <div className="flex items-center justify-center">
+            {targetYear === startYear? null: <button onClick={backYear} className="p-5 text-3xl font-light">{"<"}</button>}
             <h1 className="px-5 py-2 border rounded-lg text-2xl">{targetYear}</h1>
-            <button onClick={forwardYear} className="p-5 text-3xl font-light">{">"}</button>
+            {targetYear === endYear? null: <button onClick={forwardYear} className="p-5 text-3xl font-light">{">"}</button>}
         </div>
         <div className="flex mx-[5vh] p-3 gap-5 flex-row max-w-full items-center justify-center">
             {schedule.map((item, idx) => cardFromScheduleItem(targetYear, item, idx, cid, handleCID))}
