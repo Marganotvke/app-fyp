@@ -1,6 +1,6 @@
 import { supabase } from "@/supabaseClient";
-import HomeBanner from "./homeBanner";
-import RcmdLinkedCard from "./rcmdCard";
+import HomeBanner from "./_mainComponent/homeBanner";
+import RcmdLinkedCard from "./_mainComponent/rcmdCard";
 import { use } from "react";
 
 async function fetchRcmd(){
@@ -8,7 +8,6 @@ async function fetchRcmd(){
       .from('Hot_Attractions')
       .select()
       .order("attraction_id", { ascending: true })
-
 
   if (data && data.length > 0){
     return data;

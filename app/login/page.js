@@ -23,7 +23,7 @@ export default function Login( callbacks ){
     if (!ok){
       setWarning(true);
     }else{
-      router.push(`/`);
+      router.replace(`/`);
     }
   }
 
