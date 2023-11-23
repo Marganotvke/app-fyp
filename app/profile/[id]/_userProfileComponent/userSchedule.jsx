@@ -56,11 +56,12 @@ export default function UserSchedule( { schedules } ){
             <h1 className="px-5 py-2 border rounded-lg text-2xl">{targetYear}</h1>
             {targetYear === endYear? null: <button onClick={forwardYear} className="p-5 text-3xl font-light">{">"}</button>}
         </div>
-        <div className="flex mx-[5vh] p-3 gap-5 flex-row max-w-full items-center justify-center">
+        <div className="flex flex-wrap mx-[5vh] p-3 gap-5 flex-row max-w-full items-center justify-center">
             {schedule.map((item, idx) => cardFromScheduleItem(targetYear, item, idx, cid, handleCID))}
         </div>
         <div className="flex mx-[5vh] p-3 max-w-full items-center justify-center">
             {schedule.map((item, idx) => <ScheduleComment idx={idx} cid={cid} content={item.content}/>)}
         </div>
+        <button className="flex border rounded-lg p-2 mx-2 hover:bg-slate-400 hover:text-slate-800">Confirm Schedule</button>
     </>
 }
