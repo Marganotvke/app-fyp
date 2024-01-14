@@ -17,7 +17,7 @@ async function fetchRcmd(){
 }
 
 export default function HomePage() {
-  const recommend = use(fetchRcmd());
+  const  recommend = use(fetchRcmd());
 
   return <>
     <HomeBanner>

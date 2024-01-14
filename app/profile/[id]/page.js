@@ -10,6 +10,7 @@ async function fetchUserInfo(){
     const session = await getServerSession(authOptions);
     if (!session) return -1;
     const email = session.user.email;
+
     const {data, error} = await supabase
         .from('user_info')
         .select('schedule')

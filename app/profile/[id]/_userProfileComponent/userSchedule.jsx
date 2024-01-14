@@ -1,7 +1,8 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ScheduleCard from "./scheduleCard";
 import ScheduleComment from "./scheduleCom";
+import ScheduleButton from "./scheduleButton";
 
 function ts2YMD(ts){
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May","Jun","Jul", "Aug", "Sep", "Oct", "Nov","Dec"];
@@ -27,6 +28,10 @@ export default function UserSchedule( { schedules } ){
         setCID(id);
     }
 
+    const handleClick = () => {
+        console.log(cid);
+    }
+
     const backYear = () => {
         const destYear = targetYear-1;
         if (destYear < startYear) return;
@@ -48,7 +53,20 @@ export default function UserSchedule( { schedules } ){
         </>
     }
 
-    const schedule = schedules[0].schedule;
+    let localSchedule, schedule;
+
+    useEffect(() => {
+        localSchedule = localStorage.getItem("tmpSchedule");
+    },[])
+
+    if(!localSchedule || localSchedule.length == 0){
+        schedule = schedules[0].schedule;
+        localSchedule = schedule;
+        localStorage.setItem("tmpSchedule", schedule);
+    }else{
+        schedule = localSchedule;
+    }
+
     return <>
         <h1 className="text-3xl font-light p-5">Your current schedule:</h1>
         <div className="flex items-center justify-center">
@@ -60,8 +78,8 @@ export default function UserSchedule( { schedules } ){
             {schedule.map((item, idx) => cardFromScheduleItem(targetYear, item, idx, cid, handleCID))}
         </div>
         <div className="flex mx-[5vh] p-3 max-w-full items-center justify-center">
-            {schedule.map((item, idx) => <ScheduleComment idx={idx} cid={cid} content={item.content}/>)}
+            {schedule.map((item, idx) => <ScheduleComment idx={idx} cid={cid} content={item.content} handleFunc={handleClick}/>)}
         </div>
         <button className="flex border rounded-lg p-2 mx-2 hover:bg-slate-400 hover:text-slate-800">Confirm Schedule</button>
-    </>
+    </> 
 }

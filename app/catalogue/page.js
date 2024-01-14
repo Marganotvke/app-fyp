@@ -10,7 +10,7 @@ export default function Catalog(){
   },[])
 
   if(!loaded){
-    return <h1 className="text-2xl">Loading...</h1>
+    return <div className="h-[50%] w-[50%] max-w-full max-h-full"><img src="https://i.gifer.com/origin/34/34338d26023e5515f6cc8969aa027bca.gif"></img></div>
   }
 
   return <>
