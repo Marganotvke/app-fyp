@@ -23,15 +23,15 @@ const loremTitle = new LoremIpsum({
     }
 })
 
-export default function AttrCard({ cid, item }){
+export default function AttrCard({ idx, cid, item, handleFunc }){
     // const {attraction, city, brief, imageUrl} = item;
     return (
-        <div key={cid} className="break-inside-avoid-column max-w-full m-6 border rounded-xl p-5 bg-slate-600 transition-transform ease-linear duration-75 hover:translate-y-1 hover:shadow-md hover:shadow-gray-400">
+        <div key={idx} className="break-inside-avoid-column max-w-full m-6 border rounded-xl p-5 bg-slate-600 transition-transform ease-linear duration-75 hover:translate-y-1 hover:shadow-md hover:shadow-gray-400">
                 <h1 className="text-2xl">{loremTitle.generateSentences(1)}</h1>
                 <h2 className="mt-2 text-xl">{loremBody.generateWords(1)}</h2>
                 <h4 className="mt-2 text-md font-light">{loremBody.generateParagraphs(1)}</h4>
                 <div className="flex w-full items-center justify-end">
-                    <button className="mt-4 border rounded-md p-1 hover:bg-blue-900 hover:text-gray-200">Pick a date</button>
+                    <button onClick={()=>handleFunc()} className="mt-4 border rounded-md p-1 hover:bg-blue-900 hover:text-gray-200">Pick a date</button>
                 </div>
         </div>
     )

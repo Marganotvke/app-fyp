@@ -1,6 +1,6 @@
 import { supabase } from "@/supabaseClient";
 import { use } from "react";
-import AttrCard from "../_catComponent/clickCard";
+import AttrList from "../_catComponent/attrList";
 
 async function fetchPlaces(){
     const {data, error} = await supabase
@@ -15,12 +15,9 @@ async function fetchPlaces(){
 }
 
 export default function Page(){
-    // const data = use(fetchPlaces());
-    let data = Array(20).fill(null);
+    let datatmp = Array(20).fill(null);
 
     return <>
-        <div className="h-full columns-2 gap-0 p-5 mx-5">
-            {data.map((item, i) => <AttrCard cid={i} item={item}/>)}
-        </div>
+        <AttrList cardData={datatmp} />
     </>
 }
