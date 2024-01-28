@@ -49,7 +49,7 @@ export default function UserSchedule( { schedules } ){
 
     if (!schedules || schedules.length == 0){
         return <>
-            <h1 className="text-3xl font-light p-5">You currently do not have any schedule</h1>
+            <h1 className="text-3xl font-light p-5">You currently do not have any schedule!</h1>
         </>
     }
 

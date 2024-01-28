@@ -18,6 +18,7 @@ export default function Page(){
     let datatmp = Array(20).fill(null);
 
     return <>
+        <h1 className="text-4xl font-light m-2">Hong Kong</h1>
         <AttrList cardData={datatmp} />
     </>
 }

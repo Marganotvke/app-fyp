@@ -1,7 +1,10 @@
 import { supabase } from "@/supabaseClient";
 import HomeBanner from "./_mainComponent/homeBanner";
-import RcmdLinkedCard from "./_mainComponent/rcmdCard";
+import HomeRcmd from "./_mainComponent/homeRcmd";
+import HomeUsrRcmd from "./_mainComponent/homeUsrRcmd";
 import { use } from "react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 async function fetchRcmd(){
   const {data, error} = await supabase
@@ -16,18 +19,31 @@ async function fetchRcmd(){
   }
 }
 
+async function fetchUsrRcmd(session){
+  if(!session) return null;
+  const email = session.user.email;
+
+  const {data, error} = await supabase
+    .from("user_info")
+    .select("recommend")
+    .eq("email", email)
+
+  if (data && data.length > 0){
+    return data;
+  }else{
+    return error;
+  }
+}
+
 export default function HomePage() {
-  const  recommend = use(fetchRcmd());
+  const session = use(getServerSession(authOptions));
+  const recommend = use(fetchRcmd());
+  const usrRcmd = use(fetchUsrRcmd(session));
 
   return <>
     <HomeBanner>
-      <div className="flex flex-wrap flex-col p-6 gap-5">
-          <h1 className="text-3xl font-sans font-light">Discover New Oppotunities.</h1>
-          <hr className="h-px -my-3 bg-gray-200 border-0 dark:bg-gray-700"></hr>
-          <div className="flex flex-row flex-grow w-full max-w-screen h-[30vh] overflow-x-auto gap-5 items-center scrollbar-thumb-gray-500 scrollbar-track-gray-600 scrollbar-thin scroll-smooth">
-            {recommend.map((item, i) => <RcmdLinkedCard id={i} city={item.city} attraction={item.attraction} linkUrl="#" bgUrl={item.bg_url}/>)}
-          </div>
-      </div>
+      <HomeRcmd items={recommend}/>
+      {session ? <HomeUsrRcmd items={usrRcmd}/> : null}
     </HomeBanner>
   </>
 }
