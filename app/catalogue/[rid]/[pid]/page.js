@@ -17,10 +17,24 @@ async function fetchAttrDes(pid, rid){
         
 }
 
+async function fetchAttrRating(pid, rid){
+    const {data, error} = await supabase
+        .from("places_rating")
+        .select()
+
+    if (data && data.length > 0){
+        return data;
+    }else{
+        return error;
+    }
+
+}
+
 export default function catPage( {params} ){
     const data = use(fetchAttrDes(params.pid, params.rid));
+    const rating = use(fetchAttrRating(params.pid, params.rid));
 
     return (
-        <AttrDes items={data} />
+        <AttrDes items={data} rating={rating}/>
     )
 }
