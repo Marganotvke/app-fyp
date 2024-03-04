@@ -4,12 +4,12 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function UserProfile( children ){
+export default function UserHeader( children ){
     const router = useRouter();
     const { data: session, status } = useSession();
 
     useEffect(() => {
-        console.log(session);
+        console.log("current user:", session);
     }, [session]);
 
     return (

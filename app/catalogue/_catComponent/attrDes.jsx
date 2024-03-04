@@ -3,8 +3,11 @@
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import StyledButtonPlain from "@/app/_mainStyleComponent/StyledButtons"
+import { useState, useEffect } from "react";
+import LoadThrobber from "@/app/_mainComponent/loadThrobber";
 
 export default function AttrDes( {items} ){
+    const [loaded, setLoaded] = useState(false);
     const router = useRouter()
     if(!items){
         router.push("/500")
@@ -13,6 +16,14 @@ export default function AttrDes( {items} ){
 
     const {pid, rid, city, attraction, description, image, brief} = items[0];
     const region = rid===0? "Hong Kong" : "Taiwan";
+
+    useEffect(()=>{
+        setLoaded(true);
+    },[])
+
+    if (!loaded) {
+        return <LoadThrobber />
+    }
 
     return <>
         <div className="container max-w-full font-light">

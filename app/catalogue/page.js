@@ -1,6 +1,7 @@
 'use client'
 import Link from "next/link";
 import {useEffect, useState} from "react"
+import LoadThrobber from "../_mainComponent/loadThrobber";
 
 export default function Catalog(){
   const [loaded, setLoaded] = useState(false);
@@ -9,9 +10,9 @@ export default function Catalog(){
     setLoaded(true);
   },[])
 
-  if(!loaded){
-    return <div className="h-[50%] w-[50%] max-w-full max-h-full"><img src="https://i.gifer.com/origin/34/34338d26023e5515f6cc8969aa027bca.gif"></img></div>
-  }
+  if (!loaded) {
+    return <LoadThrobber />
+}
 
   return <>
     <div className="flex h-[calc(100vh-3.75rem)] flex-wrap flex-col">
