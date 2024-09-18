@@ -43,6 +43,7 @@ export default function Profile( {params} ){
     const session = use(getServerSession(authOptions));
     const res = use(fetchUserInfo(session));
     const usrRcmd = use(fetchUsrRcmd(session));
+    console.log(JSON.stringify(res));
     if (res == -1){
         redirect("/");
         return null;

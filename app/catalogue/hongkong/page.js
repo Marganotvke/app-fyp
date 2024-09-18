@@ -6,6 +6,7 @@ async function fetchPlaces(){
     const {data, error} = await supabase
         .from('places')
         .select()
+        .eq("rid", 0)
 
     if (data && data.length > 0){
         return data;
@@ -15,10 +16,10 @@ async function fetchPlaces(){
 }
 
 export default function Page(){
-    let datatmp = Array(20).fill(null);
+    let placesTmp = use(fetchPlaces());
 
     return <>
         <h1 className="text-4xl font-light m-2">Hong Kong</h1>
-        <AttrList cardData={datatmp} />
+        <AttrList cardData={placesTmp} />
     </>
 }

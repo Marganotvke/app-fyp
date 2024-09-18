@@ -27,6 +27,7 @@ export default function UserSchedule( { schedules, handleClick } ){
     const [loaded, setLoaded] = useState(false);
     const { data: session } = getSession();
     const [cid, setCID] = useState(-1);
+    const curYear = new Date().getFullYear();
     const [targetYear, setTargetYear] = useState(2023);
     const [startYear, endYear] = [2020, 2030];
     const handleCID = (id) => {

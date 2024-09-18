@@ -14,7 +14,7 @@ function haveRcmd(items){
     }
     
     return (
-        <h2 className="text-xl font-light">We don't have anything for you yet. How about you comeback later?</h2>
+        <h2 className="text-xl font-light">We don't have anything for you yet. How about you check back later?</h2>
     )
 }
 

@@ -43,7 +43,9 @@ export default function HomePage() {
   return <>
     <HomeBanner>
       <HomeRcmd items={recommend}/>
-      {session ? <HomeUsrRcmd items={usrRcmd}/> : null}
+      {session ? <HomeUsrRcmd items={usrRcmd}/> : 
+        <h1 className="px-6 pb-6 text-3xl font-sans font-light">Login to get personalized recommendations!</h1>
+      }
     </HomeBanner>
   </>
 }
