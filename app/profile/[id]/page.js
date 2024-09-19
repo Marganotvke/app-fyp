@@ -9,41 +9,42 @@ import ScheduleUsrRcmd from "./_userProfileComponent/scheduleUsrRcmd";
 
 async function fetchUserInfo(session){
     if (!session) return -1;
-    const email = session.user.email;
+    const id = session.user.id;
 
     const {data, error} = await supabase
         .from('user_info')
         .select('schedule')
-        .eq("email", email)
+        .eq("id", id)
 
     if (data && data.length > 0){
         return data;
     }else{
+        if(!error) return "Internal Server Error";
         return error;
     }
 }
 
 async function fetchUsrRcmd(session){
     if(!session) return null;
-    const email = session.user.email;
-  
+    const id = session.user.id;
+
     const {data, error} = await supabase
-      .from("user_info")
-      .select("recommend")
-      .eq("email", email)
-  
+        .from("user_info")
+        .select("recommend")
+        .eq("id", id)
+
     if (data && data.length > 0){
-      return data;
+        return data;
     }else{
-      return error;
+        if(!error) return "Internal Server Error";
+        return error;
     }
-  }
+}
 
 export default function Profile( {params} ){
     const session = use(getServerSession(authOptions));
     const res = use(fetchUserInfo(session));
     const usrRcmd = use(fetchUsrRcmd(session));
-    console.log(JSON.stringify(res));
     if (res == -1){
         redirect("/");
         return null;
@@ -53,7 +54,6 @@ export default function Profile( {params} ){
         "use server";
         console.log(cid);
     }
-
 
     return <>
         <UserHeader />

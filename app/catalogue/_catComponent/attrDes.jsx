@@ -5,7 +5,7 @@ import StyledButtonPlain from "@/app/_mainStyleComponent/StyledButtons"
 import { useState, useEffect } from "react";
 import LoadThrobber from "@/app/_mainComponent/loadThrobber";
 
-export default function AttrDes( {items, rating} ){
+export default function AttrDes( {items} ){
     const [loaded, setLoaded] = useState(false);
     const router = useRouter()
     if(!items){
@@ -18,6 +18,7 @@ export default function AttrDes( {items, rating} ){
 
     useEffect(()=>{
         setLoaded(true);
+        console.log(JSON.stringify(items));
     },[])
 
     if (!loaded) {

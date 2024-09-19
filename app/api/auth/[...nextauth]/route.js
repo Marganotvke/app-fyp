@@ -48,15 +48,15 @@ export const authOptions = {
         }),
     ],
 
-    // callbacks: {
-    //     session({ session, user }) {
-    //         if (session.user && user) {
-    //             session.user.id = user.id
-    //             session.user.mobile = user.mobile
-    //         }
-    //         return session
-    //     } 
-    // }
+    callbacks: {
+        session({ session, token }) {
+            if (!session) return;
+            if (session.user) {
+                session.user.id = token.sub;
+            }
+            return session
+        } 
+    }
 
 };
 
