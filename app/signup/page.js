@@ -24,10 +24,7 @@ export default function SignUp( callbacks ){
       return;
     }
 
-    const {error} = await supabase
-      .from('users')
-      .insert({"username": formValues.username, "email": formValues.email, "password": formValues.password, "image": formValues.image})
-    
+    const { message, error, status } = await fetch('/api/register', {... formValues})
     if(error){
       setWarning(true);
     }else{
