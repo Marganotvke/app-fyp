@@ -6,6 +6,8 @@ import UserSchedule from "./_userProfileComponent/userSchedule";
 import { redirect } from "next/navigation";
 import UserHeader from "./_userProfileComponent/userHeader";
 import ScheduleUsrRcmd from "./_userProfileComponent/scheduleUsrRcmd";
+import StyledBarPad from "@/app/_mainStyleComponent/StyledBarPad";
+import UsrLocSelect from "./_userProfileComponent/usrLocSelect";
 
 async function fetchUserInfo(session){
     if (!session) return -1;
@@ -30,7 +32,7 @@ async function fetchUsrRcmd(session){
 
     const {data, error} = await supabase
         .from("user_info")
-        .select("recommend")
+        .select("recommend,location")
         .eq("id", id)
 
     if (data && data.length > 0){
@@ -41,23 +43,55 @@ async function fetchUsrRcmd(session){
     }
 }
 
+async function updateUsrLoc(session, loc){
+    if(!session) return null;
+    const id = session.user.id;
+
+    const {error} = await supabase
+        .from("user_info")
+        .update({location: loc})
+        .eq("id", id)
+    
+    if(error) return error;
+}
+
 export default function Profile( {params} ){
     const session = use(getServerSession(authOptions));
     const res = use(fetchUserInfo(session));
-    const usrRcmd = use(fetchUsrRcmd(session));
+    const usrDataTmp = use(fetchUsrRcmd(session));
+    var [usrRcmd, usrLoc] = [null, null];
+    if (usrDataTmp){
+        [usrRcmd, usrLoc] = [usrDataTmp[0].recommend, usrDataTmp[0].location];
+    }
+
     if (res == -1){
         redirect("/");
-        return null;
     };
 
-    const handleClick = async (cid) => {
+    const handleClick = async () => {
         "use server";
-        console.log(cid);
+        var now = new Date();
+        console.log(`[${now.toString()}] Request: User ${session.user.id} request booking`);
+        'use client';
+        redirect("https://www.google.com/search?q=book+a+hotel");
+    }
+
+    const handleSave = async (locUsrLoc) => {
+        "use server";
+        const err = await updateUsrLoc(session, locUsrLoc);
+        if(err){
+            console.log(err);
+        }else{
+            var now = new Date();
+            console.log(`[${now.toString()}] Request: User ${session.user.id} change location to ${locUsrLoc}`);
+        }
     }
 
     return <>
         <UserHeader />
         <UserSchedule schedules={res} handleClick={handleClick}/>
-        <ScheduleUsrRcmd items={usrRcmd}/>
+        {/* <ScheduleUsrRcmd items={usrRcmd}/> */}
+        <StyledBarPad />
+        <UsrLocSelect usrLoc={usrLoc} handleSave={handleSave}/>
     </>
 }

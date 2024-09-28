@@ -40,7 +40,7 @@ export default function Login( callbacks ){
           <form onSubmit={onSubmitLogin}>
             <div className="flex flex-col gap-8 justify-center items-center">
               <h2 className="text-2xl text-white font-bold">Welcome to FYP</h2>
-              {warning? <h4 className="text-white">Please try again.</h4>: null}
+              {warning? <h4 className="text-red-500">Please try again.</h4>: null}
               <div className="flex flex-col gap-2">
                 <label className="text-white" htmlFor="account">Email</label>
                 <input className={warning? `border-4 border-red-600 rounded-md p-2 text-black font-light`: `border rounded-md p-2 text-black font-light`} type="text" id="email" name="email" onChange={handleChange} required/>

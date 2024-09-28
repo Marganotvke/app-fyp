@@ -1,7 +1,7 @@
 'use client'
 
 import RcmdLinkedCard from "@/app/_mainComponent/rcmdCard";
-import Link from "next/link";
+import StyledBar from "@/app/_mainStyleComponent/StyledBarPad";
 
 function haveRcmd(items){
     if(items && items[0].length > 0){
@@ -20,8 +20,8 @@ function haveRcmd(items){
 export default function ScheduleUsrRcmd( { items } ){
     return (
     <div className="flex flex-wrap flex-col p-6 gap-5">
-        <h1 className="text-3xl font-sans font-light">How about more attractions that fit your style?</h1>
-        <hr className="h-px -my-3 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+        <h1 className="text-3xl font-sans font-light">How about more attractions that fits you?</h1>
+        <StyledBar />
         {haveRcmd(items)}
     </div>
     )

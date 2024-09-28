@@ -6,7 +6,7 @@ export default async function handler(req, res) {
         try {
             const { data, error } = await supabase
                 .from('user_info')
-                .select('recommend')
+                .select('location,recommend')
                 .eq('id', id)
             
             if (data && data.length > 0){

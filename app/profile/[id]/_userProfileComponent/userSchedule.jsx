@@ -107,6 +107,6 @@ export default function UserSchedule( { schedules, handleClick } ){
                 </button>
             }
         </div>
-        <button onClick={()=>handleClick()} className="flex border rounded-lg p-2 mx-2 hover:bg-slate-400 hover:text-slate-800">Confirm Schedule</button>
+        <button onClick={()=>handleClick()} className="flex border rounded-lg p-2 mx-2 hover:bg-slate-400 hover:text-slate-800">Start Booking</button>
     </> 
 }
