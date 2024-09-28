@@ -4,6 +4,14 @@ import StyledButtonPlain from "@/app/_mainStyleComponent/StyledButtons";
 
 export default function UsrLocSelect({usrLoc, handleSave}){
     const [locUsrLoc, setLocUsrLoc] = useState(Number(usrLoc));
+    const [saved, setSaved] = useState(false);
+
+    const handleSaveTime = () => {
+        setSaved(true);
+        setTimeout(() => {
+            setSaved(false);
+        }, 2000);
+    }
 
     return <>
         <label for="regions" class="block m-2 text-xl font-light">Choose where you would like to go!</label>
@@ -12,6 +20,7 @@ export default function UsrLocSelect({usrLoc, handleSave}){
             <option value='0'>Hong Kong</option>
             <option value="1">Taiwan</option>
         </select>
-        <StyledButtonPlain onClick={()=>{handleSave(locUsrLoc)}}>Save</StyledButtonPlain>
+        <StyledButtonPlain onClick={()=>{handleSave(locUsrLoc); handleSaveTime()}}>Save</StyledButtonPlain>
+        {saved ? <h1>Preference Saved!</h1> : null}
     </>
 }

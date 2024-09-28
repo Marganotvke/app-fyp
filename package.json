@@ -16,6 +16,7 @@
     "is-email": "^1.0.2",
     "jsonwebtoken": "^9.0.2",
     "lorem-ipsum": "^2.0.8",
+    "ml-knn": "^3.0.0",
     "next": "14.0.1",
     "next-auth": "^4.24.8",
     "nextjs": "^0.0.3",

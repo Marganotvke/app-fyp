@@ -1,5 +1,8 @@
 import { supabase } from '@/supabaseClient';
 import { KNN, predict } from 'ml-knn';
+import { use } from "react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 async function fetchPlacesLabels(rid){
     var [ridTmp, ridTmp2] = [0, 1];
@@ -31,27 +34,18 @@ async function fetchUsrInfo(id){
     return error;
 }
 
-export async function POST(req) {
-    const { id } = req.query;
-    
-    try {
-        usrInfo = await fetchUsrInfo(id);
-        if (usrInfo === "Internal Server Error" || !usrInfo){throw new Error("Internal Server Error");}
-        attrac = await fetchPlacesLabels(usrInfo[0].location);
-        if (attrac === "Internal Server Error" || !attrac){throw new Error("Internal Server Error");}
-
-        // console.log(JSON.stringify());
         
-        return NextResponse.json(
-            {message: `Reachable for User: ${id}`},
-            {data: attrac},
-            {status: 200},
-        );
-    }catch (error){
-        return NextResponse.json(
-            {message: `Internal Server Error`},
-            {error: error},
-            {status: 500},
-        );
-    }
+
+export default function UsrLocRcmd(){
+    const session = use(getServerSession(authOptions));
+    const id = session.user.id;
+    const usrInfo = use(fetchUsrInfo(id));
+    if (usrInfo === "Internal Server Error" || !usrInfo){throw new Error("Internal Server Error");}
+    const attrac = use(fetchPlacesLabels(usrInfo[0].location));
+    if (attrac === "Internal Server Error" || !attrac){throw new Error("Internal Server Error");}
+
+
+    return <>
+        <h1 className="text-md font-light">{JSON.stringify(attrac)}</h1>
+    </>
 }

@@ -8,6 +8,7 @@ import UserHeader from "./_userProfileComponent/userHeader";
 import ScheduleUsrRcmd from "./_userProfileComponent/scheduleUsrRcmd";
 import StyledBarPad from "@/app/_mainStyleComponent/StyledBarPad";
 import UsrLocSelect from "./_userProfileComponent/usrLocSelect";
+import UsrLocRcmd from "./_userProfileComponent/usrLocRcmd";
 
 async function fetchUserInfo(session){
     if (!session) return -1;
@@ -49,11 +50,12 @@ async function updateUsrLoc(session, loc){
 
     const {error} = await supabase
         .from("user_info")
-        .update({location: loc})
+        .update({id:id, location: loc})
         .eq("id", id)
     
     if(error) return error;
 }
+
 
 export default function Profile( {params} ){
     const session = use(getServerSession(authOptions));
@@ -93,5 +95,6 @@ export default function Profile( {params} ){
         {/* <ScheduleUsrRcmd items={usrRcmd}/> */}
         <StyledBarPad />
         <UsrLocSelect usrLoc={usrLoc} handleSave={handleSave}/>
+        <UsrLocRcmd />
     </>
 }
