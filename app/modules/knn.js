@@ -13,11 +13,20 @@ function cosineSimilarity(A,B){
     return similarity;
 }
 
+function euclideanDistance(A,B){
+    var distance = 0;
+    for (var i = 0; i < A.length; i++) {
+        distance += Math.pow(A[i] - B[i], 2);
+    }
+    return Math.sqrt(distance);
+}
+
 export default function findNearestNeighbors(dataset, targetVector, k = 2, method = 'cosine') {
     const neighbors = [];
-    let maxSimilarity = -1;
+    let maxSimilarity = -Infinity;
+    var distMethod = (method === 'cosine') ? cosineSimilarity : euclideanDistance;
 
-    const cosSimData = dataset.map((x) => cosineSimilarity(x, targetVector));
+    const cosSimData = dataset.map((x) => distMethod(x, targetVector));
     const sortedCosSimData = [...cosSimData].sort((a, b) => b - a);
     const topK = sortedCosSimData.slice(0, k);
 

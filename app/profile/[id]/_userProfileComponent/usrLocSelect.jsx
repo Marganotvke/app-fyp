@@ -14,7 +14,7 @@ export default function UsrLocSelect({usrLoc, handleSave}){
     }
 
     return <>
-        <label for="regions" class="block m-2 text-xl font-light">Choose where you would like to go!</label>
+        <label for="regions" class="block m-2 text-xl font-light">Your current location</label>
         <select id="regions" class="flex border rounded-lg p-2 mx-2 bg-slate-900" onChange={(e) => {setLocUsrLoc(Number(e.target.value))}}>
             {locUsrLoc != null ? <option selected={locUsrLoc} disabled hidden>{locUsrLoc===0? "Hong Kong": "Taiwan"}</option> : <option selected disabled hidden>Choose a region</option>}
             <option value='0'>Hong Kong</option>

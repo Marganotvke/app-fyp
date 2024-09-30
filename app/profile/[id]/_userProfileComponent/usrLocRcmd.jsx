@@ -11,7 +11,7 @@ async function fetchPlacesLabels(rid){
     }
     const { data, error } = await supabase
     .from('places')
-    .select('attraction, cats')
+    .select('rid, pid, attraction, cats')
     .or(`rid.eq.${ridTmp},rid.eq.${ridTmp2}`)
 
     if (data && data.length > 0){
@@ -42,17 +42,18 @@ export default function UsrLocRcmd(){
     const attrac = use(fetchPlacesLabels(usrInfo[0].location));
     if (attrac === "Internal Server Error" || !attrac){throw new Error("Internal Server Error");}
 
-    const usrRcmdFooBar = Array.from({length: 10}, () => Math.random());
+    const usrRcmdFooBar = Array.from({length: 10}, () => Math.round(Math.random()*100)/100);
     var dataset = [];
     for (var i = 0; i < attrac.length; i++) {
         dataset.push(attrac[i].cats);
     }
     const res = findNearestNeighbors(dataset, usrRcmdFooBar, 5);
     const resAttrac = attrac.filter((x, i) => res.includes(i));
-    const resAttracNames = resAttrac.map((x) => x.attraction);
+    const resAttracIdNames = resAttrac.map(({rid, pid, attraction}) => ({rid, pid, attraction}));
 
     return <>
+        <h1 className="text-md font-light">{JSON.stringify(["ticket","rural","natural","outdoor","adultness","crowdedness","transport","accessibility","duration","purchasing"])}</h1>
         <h1 className="text-md font-light">{JSON.stringify(usrRcmdFooBar)}</h1>
-        <h1 className="text-md font-light">{JSON.stringify(resAttracNames)}</h1>
+        <h1 className="text-md font-light">{JSON.stringify(resAttracIdNames)}</h1>
     </>
 }
