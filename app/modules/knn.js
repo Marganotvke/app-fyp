@@ -23,15 +23,14 @@ function euclideanDistance(A,B){
 
 export default function findNearestNeighbors(dataset, targetVector, k = 2, method = 'cosine') {
     const neighbors = [];
-    let maxSimilarity = -Infinity;
     var distMethod = (method === 'cosine') ? cosineSimilarity : euclideanDistance;
 
-    const cosSimData = dataset.map((x) => distMethod(x, targetVector));
-    const sortedCosSimData = [...cosSimData].sort((a, b) => b - a);
-    const topK = sortedCosSimData.slice(0, k);
+    const distData = dataset.map((x) => distMethod(x, targetVector));
+    const sortedDistData = [...distData].sort((a, b) => b - a);
+    const topK = sortedDistData.slice(0, k);
 
     for (let i = 0; i < k; i++) {
-        const idx = cosSimData.indexOf(topK[i]);
+        const idx = distData.indexOf(topK[i]);
         neighbors.push(idx);
     }
 
