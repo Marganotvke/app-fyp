@@ -13,21 +13,18 @@ function cosineSimilarity(A,B){
     return similarity;
 }
 
-function findNearestNeighbors(dataset, targetVector, k = 2, method = 'cosine') {
-  const neighbors = [];
-  let maxSimilarity = -1;
+export default function findNearestNeighbors(dataset, targetVector, k = 2, method = 'cosine') {
+    const neighbors = [];
+    let maxSimilarity = -1;
 
-  for (let i = 0; i < dataset.length; i++) {
-    const similarity = cosineSimilarity(targetVector, dataset[i]);
-    if (similarity > maxSimilarity) {
-      neighbors.push(i);
-      maxSimilarity = similarity;
-    }
+    const cosSimData = dataset.map((x) => cosineSimilarity(x, targetVector));
+    const sortedCosSimData = [...cosSimData].sort((a, b) => b - a);
+    const topK = sortedCosSimData.slice(0, k);
 
-    if (neighbors.length >= k) {
-      break;
+    for (let i = 0; i < k; i++) {
+        const idx = cosSimData.indexOf(topK[i]);
+        neighbors.push(idx);
     }
-  }
 
   return neighbors;
 }
