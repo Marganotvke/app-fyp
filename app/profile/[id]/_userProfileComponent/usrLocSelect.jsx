@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import StyledButtonPlain from "@/app/_mainStyleComponent/StyledButtons";
+import { revalidatePath } from "next/cache";
 
 export default function UsrLocSelect({usrLoc, handleSave}){
     const [locUsrLoc, setLocUsrLoc] = useState(Number(usrLoc));
@@ -14,13 +15,13 @@ export default function UsrLocSelect({usrLoc, handleSave}){
     }
 
     return <>
-        <label for="regions" class="block m-2 text-xl font-light">Your current location</label>
-        <select id="regions" class="flex border rounded-lg p-2 mx-2 bg-slate-900" onChange={(e) => {setLocUsrLoc(Number(e.target.value))}}>
-            {locUsrLoc != null ? <option selected={locUsrLoc} disabled hidden>{locUsrLoc===0? "Hong Kong": "Taiwan"}</option> : <option selected disabled hidden>Choose a region</option>}
+        <label className="block m-2 text-xl font-light">Your current location</label>
+        <select id="regions" className="flex border rounded-lg p-2 mx-2 bg-slate-900" onChange={(e) => {setLocUsrLoc(Number(e.target.value))}}>
+            {locUsrLoc != null ? <option defaultValue={`${locUsrLoc}`} hidden>{locUsrLoc===0? "Hong Kong": "Taiwan"}</option> : <option defaultValue disabled hidden>Choose a region</option>}
             <option value='0'>Hong Kong</option>
             <option value="1">Taiwan</option>
         </select>
-        <StyledButtonPlain onClick={()=>{handleSave(locUsrLoc); handleSaveTime()}}>Save</StyledButtonPlain>
+        <StyledButtonPlain onClick={()=>{handleSave(locUsrLoc); handleSaveTime(); revalidatePath('/profile/[slug]', 'page')}}>Save</StyledButtonPlain>
         {saved ? <h1>Preference Saved!</h1> : null}
     </>
 }

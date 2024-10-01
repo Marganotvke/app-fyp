@@ -4,11 +4,10 @@ import RcmdLinkedCard from "./rcmdCard";
 import Link from "next/link";
 
 function haveRcmd(items){
-    console.log(items);
-    if(items && items[0].length > 0 && items !== String){
+    if(items && items.length > 0 && !items[0].hasOwnProperty("recommend")){
         return (
             <div className="flex flex-row flex-grow w-full max-w-screen h-[30vh] overflow-x-auto gap-5 items-center scrollbar-thumb-gray-500 scrollbar-track-gray-600 scrollbar-thin scroll-smooth">
-                {items.map((item, i) => <RcmdLinkedCard id={i} city={item.city} attraction={item.attraction} linkUrl="#" bgUrl={item.bg_url}/>)}
+                {items.map((item, i) => <RcmdLinkedCard id={i} city={item.city} attraction={item.attraction} linkUrl="#" bgUrl={item.image}/>)}
             </div>
         )
     }
@@ -18,10 +17,10 @@ function haveRcmd(items){
     )
 }
 
-export default function HomeUsrRcmd( { items } ){
+export default function UserRcmd( { items, motd } ){
     return (
     <div className="flex flex-wrap flex-col p-6 gap-5">
-        <h1 className="text-3xl font-sans font-light">How about these places?</h1>
+        <h1 className="text-3xl font-sans font-light">{motd}</h1>
         <hr className="h-px -my-3 bg-gray-200 border-0 dark:bg-gray-700"></hr>
         {haveRcmd(items)}
     </div>

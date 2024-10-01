@@ -5,7 +5,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import UserSchedule from "./_userProfileComponent/userSchedule";
 import { redirect } from "next/navigation";
 import UserHeader from "./_userProfileComponent/userHeader";
-import ScheduleUsrRcmd from "./_userProfileComponent/scheduleUsrRcmd";
+// import ScheduleUsrRcmd from "./_userProfileComponent/scheduleUsrRcmd";
 import StyledBarPad from "@/app/_mainStyleComponent/StyledBarPad";
 import UsrLocSelect from "./_userProfileComponent/usrLocSelect";
 import UsrLocRcmd from "./_userProfileComponent/usrLocRcmd";
