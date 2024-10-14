@@ -10,6 +10,8 @@ import StyledBarPad from "@/app/_mainStyleComponent/StyledBarPad";
 import UsrLocSelect from "./_userProfileComponent/usrLocSelect";
 import UsrLocRcmd from "./_userProfileComponent/usrLocRcmd";
 
+export const revalidate = 0;
+
 async function fetchUserInfo(session){
     if (!session) return -1;
     const id = session.user.id;

@@ -4,15 +4,15 @@ import {useEffect, useState} from "react"
 import LoadThrobber from "../_mainComponent/loadThrobber";
 
 export default function Catalog(){
-  const [loaded, setLoaded] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
 
-  useEffect(()=>{
-    setLoaded(true);
-  },[])
+  // useEffect(()=>{
+  //   setLoaded(true);
+  // },[])
 
-  if (!loaded) {
-    return <LoadThrobber />
-}
+  // if (!loaded) {
+  //   return <LoadThrobber />
+  // }
 
   return <>
     <div className="flex h-[calc(100vh-3.75rem)] flex-wrap flex-col">

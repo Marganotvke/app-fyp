@@ -16,14 +16,14 @@ export default function AttrDes( {items} ){
     const {pid, rid, city, attraction, description, image, brief} = items[0];
     const region = rid === 0 ? "Hong Kong" : "Taiwan";
 
-    useEffect(()=>{
-        setLoaded(true);
-        console.log(JSON.stringify(items));
-    },[])
+    // useEffect(()=>{
+    //     setLoaded(true);
+    //     console.log(JSON.stringify(items));
+    // },[])
 
-    if (!loaded) {
-        return <LoadThrobber />
-    }
+    // if (!loaded) {
+    //     return <LoadThrobber />
+    // }
 
     return <>
         <div className="container max-w-full font-light">
