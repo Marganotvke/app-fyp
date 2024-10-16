@@ -5,28 +5,13 @@ import UserRcmd from "./_mainComponent/usrRcmd";
 import { use } from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
+import UsrLocRcmd from "./profile/[id]/_userProfileComponent/usrLocRcmd";
 
 async function fetchRcmd(){
   const {data, error} = await supabase
       .from('Hot_Attractions')
       .select()
       .order("attraction_id", { ascending: true })
-
-  if (data && data.length > 0){
-    return data;
-  }else{
-    return error;
-  }
-}
-
-async function fetchUsrRcmd(session){
-  if(!session) return null;
-  const id = session.user.id;
-
-  const {data, error} = await supabase
-    .from("user_info")
-    .select("recommend")
-    .eq("id", id)
 
   if (data && data.length > 0){
     return data;
@@ -43,7 +28,7 @@ export default function HomePage() {
   return <>
     <HomeBanner>
       <HomeRcmd items={recommend}/>
-      {session ? <UserRcmd items={usrRcmd} motd={"How about these places?"}/> : 
+      {session ? <UsrLocRcmd/> : 
         <h1 className="px-6 pb-6 text-3xl font-sans font-light">Login to get personalized recommendations!</h1>
       }
     </HomeBanner>

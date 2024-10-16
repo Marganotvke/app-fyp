@@ -94,7 +94,6 @@ export default function Profile( {params} ){
     return <>
         <UserHeader />
         <UserSchedule schedules={res} handleClick={handleClick}/>
-        {/* <ScheduleUsrRcmd items={usrRcmd}/> */}
         <StyledBarPad />
         <UsrLocSelect usrLoc={usrLoc} handleSave={handleSave}/>
         <UsrLocRcmd />

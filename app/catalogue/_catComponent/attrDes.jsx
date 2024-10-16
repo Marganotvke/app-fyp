@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import StyledButtonPlain from "@/app/_mainStyleComponent/StyledButtons"
 import { useState, useEffect } from "react";
-import LoadThrobber from "@/app/_mainComponent/loadThrobber";
+import LoadThrobber from "@/app/_mainStyleComponent/loadThrobber";
 
 export default function AttrDes( {items} ){
     const [loaded, setLoaded] = useState(false);

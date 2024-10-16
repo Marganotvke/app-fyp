@@ -22,7 +22,7 @@ export default function Navbar() {
     // },[session])
 
     return (
-        <nav className='sticky top-0 z-10 flex items-center justify-between bg-slate-400 flex-wrap p-2 backdrop-blur-sm bg-opacity-70'>
+        <nav className='sticky top-0 z-10 flex items-center justify-between bg-slate-400 p-2 backdrop-blur-sm bg-opacity-70'>
             <div className='flex items-center flex-shrink-0 mr-6 text-3xl p-1'>
                 <Link href="/">FYP</Link>
             </div>

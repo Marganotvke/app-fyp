@@ -1,4 +1,4 @@
-import LoadThrobber from "./_mainComponent/loadThrobber";
+import LoadThrobber from "./_mainStyleComponent/loadThrobber";
 
 export default function Loading(){
     return <LoadThrobber />

@@ -43,17 +43,15 @@ export default function UsrLocRcmd(){
     const attrac = use(fetchPlacesLabels(usrInfo[0].location));
     if (attrac === "Internal Server Error" || !attrac){throw new Error("Internal Server Error");}
 
-    const usrRcmdFooBar = Array.from({length: 10}, () => Math.round(Math.random()*100)/100);
+    const usrRcmd = usrInfo[0].recommend;
     var dataset = [];
     for (var i = 0; i < attrac.length; i++) {
         dataset.push(attrac[i].cats);
     }
-    const res = findNearestNeighbors(dataset, usrRcmdFooBar, 5);
+    const res = findNearestNeighbors(dataset, usrRcmd, 5);
     const resAttrac = attrac.filter((x, i) => res.includes(i));
 
     return <>
-        <h1 className="text-md font-light">{JSON.stringify(["ticket","rural","natural","outdoor","adultness","crowdedness","transport","accessibility","duration","purchasing"])}</h1>
-        <h1 className="text-md font-light">{JSON.stringify(usrRcmdFooBar)}</h1>
         <UserRcmd items={resAttrac} motd={"Recommended for you"}/>
     </>
 }

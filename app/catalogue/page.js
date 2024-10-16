@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link";
 import {useEffect, useState} from "react"
-import LoadThrobber from "../_mainComponent/loadThrobber";
+import LoadThrobber from "../_mainStyleComponent/loadThrobber";
 
 export default function Catalog(){
   // const [loaded, setLoaded] = useState(false);

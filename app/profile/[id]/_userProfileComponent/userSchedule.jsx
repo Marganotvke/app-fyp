@@ -4,7 +4,19 @@ import ScheduleCard from "./scheduleCard";
 import ScheduleComment from "./scheduleCom";
 import ScheduleButton from "./scheduleButton";
 import { getSession } from "next-auth/react";
-import LoadThrobber from "@/app/_mainComponent/loadThrobber";
+import LoadThrobber from "@/app/_mainStyleComponent/loadThrobber";
+import { supabase } from "@/supabaseClient";
+
+async function updateUserInfo(session, schedule){
+    const id = session.user.id;
+    const {err} = await supabase
+        .from("user_info")
+        .update({schedule: schedule})
+        .eq("id", id)
+
+    if(err) return err;
+    return null;
+}
 
 function ts2YMD(ts){
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May","Jun","Jul", "Aug", "Sep", "Oct", "Nov","Dec"];
@@ -60,6 +72,7 @@ export default function UserSchedule( { schedules, handleClick } ){
         window.localStorage.setItem("tmpSchedule", JSON.stringify(localSchedule));
         setCID(-1);
         console.log(JSON.stringify(schedule))
+        use(updateUserInfo(session, localSchedule));
     }
 
     if (!schedule || schedule.length == 0){
@@ -103,6 +116,6 @@ export default function UserSchedule( { schedules, handleClick } ){
                 </button>
             }
         </div>
-        <button onClick={()=>handleClick()} className="flex border rounded-lg p-2 mx-2 hover:bg-slate-400 hover:text-slate-800">Start Booking</button>
+        <button onClick={()=>handleClick()} className="border rounded-lg p-2 mx-2 hover:bg-slate-400 hover:text-slate-800">Start Booking</button>
     </> 
 }

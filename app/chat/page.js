@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { use } from "react";
-import ChatLogger from "./_chatComponent/chatLogger";
+import ChatInterface from "./_chatComponent/chatInterface";
 
 export default function Chat(){
     const session = use(getServerSession(authOptions));
@@ -10,6 +10,6 @@ export default function Chat(){
     if (!session || session.status === "unauthenticated") {redirect("/login"); return null;}
 
     return <>
-        <ChatLogger session={session}/>
+        <ChatInterface session={session}/>
     </>
 }
