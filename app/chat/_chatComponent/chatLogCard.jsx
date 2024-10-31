@@ -7,11 +7,15 @@ export default function ChatLogCard({idx, item}){
     if (role !== "system"){
         // need different handling for user and assistant format as user do not use content.response
         if (role === "user"){
-            return (
-                <div key={`u${idx}`} className={`break-inside-avoid-column w-full p-5 justify-center items-center bg-slate-700`}>
-                    <h4 key={`uctx${idx}`} className="text-md mt-2 text-left font-semibold">{`You: ${content}`}</h4>
-                </div>
-            )
+            if (content !== "Introduce yourself."){
+                return (
+                    <div key={`u${idx}`} className={`break-inside-avoid-column w-full p-5 justify-center items-center bg-slate-700`}>
+                        <h4 key={`uctx${idx}`} className="text-md mt-2 text-left font-semibold">{`You: ${content}`}</h4>
+                    </div>
+                )
+            }else{
+                return null;
+            }
         }else{
             try {
                 tmpContent = JSON.parse(content);

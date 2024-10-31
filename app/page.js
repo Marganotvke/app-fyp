@@ -23,7 +23,6 @@ async function fetchRcmd(){
 export default function HomePage() {
   const session = use(getServerSession(authOptions));
   const recommend = use(fetchRcmd());
-  const usrRcmd = use(fetchUsrRcmd(session));
 
   return <>
     <HomeBanner>
