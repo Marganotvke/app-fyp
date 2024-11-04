@@ -9,13 +9,16 @@ import { supabase } from "@/supabaseClient";
 
 async function updateUserInfo(session, schedule){
     const id = session.user.id;
-    const {err} = await supabase
+    const err = await supabase
         .from("user_info")
         .update({schedule: schedule})
         .eq("id", id)
 
-    if(err) return err;
-    return null;
+    if(err.status !== 204){
+        return err;
+    }else{
+        return -1;
+    }
 }
 
 function ts2YMD(ts){
@@ -65,14 +68,17 @@ export default function UserSchedule( { schedules, handleClick } ){
         setCID(-1);
     }
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         delete schedule[cid];
         schedule = schedule.filter((item) => item !== null);
         localSchedule = schedule;
         window.localStorage.setItem("tmpSchedule", JSON.stringify(localSchedule));
         setCID(-1);
         console.log(JSON.stringify(schedule))
-        use(updateUserInfo(session, localSchedule));
+        const res = await updateUserInfo(session, localSchedule);
+        if (res !== -1){
+            alert(`Error updating schedule, please try again.\n${res}`);
+        }
     }
 
     if (!schedule || schedule.length == 0){
