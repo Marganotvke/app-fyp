@@ -9,12 +9,6 @@ export default function AttrCard({ idx, item, desFunc }){
                     <h1 className="text-2xl">{attraction}</h1>
                     <h2 className="mt-2 text-xl">{city}, {rid === 0 ? "Hong Kong" : "Taiwan"}</h2>
                     <h4 className="mt-2 text-md font-light">{brief}</h4>
-                    <div className="flex w-full items-center justify-end">
-<<<<<<< HEAD
-=======
-                        <StyledButtonPlain onClick={(e)=>dateFunc(e, pid, rid)}>Pick a date</StyledButtonPlain>
->>>>>>> 1588eb34f2a980f82c157f16005b022ea7449f0b
-                    </div>
             </div>
         )
     }
