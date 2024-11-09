@@ -44,7 +44,6 @@ export default function UsrLocRcmd(){
     if (attrac === "Internal Server Error" || !attrac){throw new Error("Internal Server Error");}
 
     const usrRcmd = usrInfo[0].recommend;
-    console.log(usrRcmd);
     var dataset = [];
     for (var i = 0; i < attrac.length; i++) {
         dataset.push(attrac[i].cats);

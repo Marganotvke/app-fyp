@@ -1,4 +1,6 @@
 'use client'
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function ChatLogCard({idx, item}){
     const {role, content} = item;
@@ -9,8 +11,8 @@ export default function ChatLogCard({idx, item}){
         if (role === "user"){
             if (content !== "Introduce yourself."){
                 return (
-                    <div key={`u${idx}`} className={`break-inside-avoid-column w-full p-5 justify-center items-center bg-slate-700`}>
-                        <h4 key={`uctx${idx}`} className="text-md mt-2 text-left font-semibold">{`You: ${content}`}</h4>
+                    <div key={`u${idx}`} className={`break-inside-avoid-column w-full p-5 justify-center items-center bg-slate-700 text-md text-left font-semibold`}>
+                        You: <Markdown key={`actx${idx}`} remarkPlugins={[remarkGfm]}>{content}</Markdown>
                     </div>
                 )
             }else{
@@ -27,8 +29,8 @@ export default function ChatLogCard({idx, item}){
                 )
             }
             return (
-                <div key={`u${idx}`} className={`break-inside-avoid-column w-full p-5 justify-center items-center bg-slate-500`}>
-                    <h4 key={`actx${idx}`} className="font-light text-md mt-2 text-left">{`AI: ${tmpContent.response}`}</h4>
+                <div key={`u${idx}`} className={`break-inside-avoid-column w-full p-5 justify-center items-center bg-slate-500 font-light text-md text-left`}>
+                    AI: <Markdown key={`actx${idx}`} remarkPlugins={[remarkGfm]}>{tmpContent.response}</Markdown>
                 </div>
             )
         }

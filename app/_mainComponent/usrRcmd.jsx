@@ -7,7 +7,7 @@ function haveRcmd(items){
     if(items && items.length > 0 && !items[0].hasOwnProperty("recommend")){
         return (
             <div className="flex flex-row flex-grow w-full max-w-screen h-[30vh] overflow-x-auto gap-5 items-center scrollbar-thumb-gray-500 scrollbar-track-gray-600 scrollbar-thin scroll-smooth">
-                {items.map((item, i) => <RcmdLinkedCard id={i} city={item.city} attraction={item.attraction} linkUrl="#" bgUrl={item.image}/>)}
+                {items.map((item, i) => <RcmdLinkedCard id={i} city={item.city} attraction={item.attraction} linkUrl={`/catalogue/${item.rid}/${item.pid}`} bgUrl={item.image}/>)}
             </div>
         )
     }
