@@ -44,7 +44,7 @@ async function fetchChat(session, profile, backlog){
     const modelPath = "mradermacher/gemma-2-9b-it-SimPO-GGUF/gemma-2-9b-it-SimPO.Q3_K_S.gguf";
     var model;
     try {
-        model = await client.llm.get({path: modelPath});
+        model = await client.llm.get({path: modelPath}); 
     } catch (error) {
         console.log("Model not found, loading a new one");
         try {
@@ -90,10 +90,10 @@ export default function ChatInterface({session}) {
     const [res, setRes] = useState(null);
     const [backlog, setBacklog] = useState([]);
     const [loaded, setLoaded] = useState(false);
-    var profile = use(fetchRcmd(session));    
 
     const fetchAsyncChat = async () => {
-        const data = await fetchRcmd(session);
+        var data = await fetchRcmd(session);
+        data !== -1 ? data : undefined;
         const [tmpRes, tmpBacklog] = await fetchChat(session, data);
         setRes(tmpRes);
         setBacklog(tmpBacklog);
