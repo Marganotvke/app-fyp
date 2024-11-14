@@ -2,12 +2,11 @@
 import { useState, useEffect } from "react";
 import ScheduleCard from "./scheduleCard";
 import ScheduleComment from "./scheduleCom";
-import ScheduleButton from "./scheduleButton";
-import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import LoadThrobber from "@/app/_mainStyleComponent/loadThrobber";
 import { supabase } from "@/supabaseClient";
 
-async function updateUserInfo(session, schedule){
+async function updatetUserInfo(session, schedule){
     const id = session.user.id;
     const err = await supabase
         .from("user_info")
@@ -41,11 +40,11 @@ export default function UserSchedule( { schedules, handleClick } ){
     let localSchedule, schedule = schedules[0].schedule;
 
     const [loaded, setLoaded] = useState(false);
-    const { data: session } = getSession();
+    const { data: session, status } = useSession();
     const [cid, setCID] = useState(-1);
     const curYear = new Date().getFullYear();
-    const [targetYear, setTargetYear] = useState(2023);
-    const [startYear, endYear] = [2020, 2030];
+    const [targetYear, setTargetYear] = useState(curYear);
+    const [startYear, endYear] = [curYear, curYear+10];
     const handleCID = (id) => {
         if (id === cid){
             setCID(-1);
@@ -75,13 +74,13 @@ export default function UserSchedule( { schedules, handleClick } ){
         window.localStorage.setItem("tmpSchedule", JSON.stringify(localSchedule));
         setCID(-1);
         console.log(JSON.stringify(schedule))
-        const res = await updateUserInfo(session, localSchedule);
+        const res = await updatetUserInfo(session, localSchedule);
         if (res !== -1){
             alert(`Error updating schedule, please try again.\n${res}`);
         }
     }
 
-    if (!schedule || schedule.length == 0){
+    if (!schedule || schedule.length === 0){
         return <>
             <h1 className="text-3xl font-light p-5">You currently do not have any schedule!</h1>
         </>

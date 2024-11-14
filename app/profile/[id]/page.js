@@ -5,10 +5,11 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import UserSchedule from "./_userProfileComponent/userSchedule";
 import { redirect } from "next/navigation";
 import UserHeader from "./_userProfileComponent/userHeader";
-// import ScheduleUsrRcmd from "./_userProfileComponent/scheduleUsrRcmd";
 import StyledBarPad from "@/app/_mainStyleComponent/StyledBarPad";
 import UsrLocSelect from "./_userProfileComponent/usrLocSelect";
 import UsrLocRcmd from "./_userProfileComponent/usrLocRcmd";
+import { Router } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export const revalidate = 0;
 
@@ -54,7 +55,7 @@ async function updateUsrLoc(session, loc){
         .from("user_info")
         .update({id:id, location: loc})
         .eq("id", id)
-    
+
     if(error) return error;
 }
 
@@ -88,14 +89,15 @@ export default function Profile( {params} ){
         }else{
             var now = new Date();
             console.log(`[${now.toString()}] Request: User ${session.user.id} change location to ${locUsrLoc}`);
+            revalidatePath(`/profile/${session.user.name}`);
         }
     }
 
-    return <>
+    return <div className="h-full">
         <UserHeader />
         <UserSchedule schedules={res} handleClick={handleClick}/>
         <StyledBarPad />
         <UsrLocSelect usrLoc={usrLoc} handleSave={handleSave}/>
         <UsrLocRcmd />
-    </>
+    </div>
 }

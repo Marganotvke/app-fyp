@@ -21,7 +21,7 @@ export default function UsrLocSelect({usrLoc, handleSave}){
             <option value='0'>Hong Kong</option>
             <option value="1">Taiwan</option>
         </select>
-        <StyledButtonPlain onClick={()=>{handleSave(locUsrLoc); handleSaveTime(); revalidatePath('/profile/[slug]', 'page')}}>Save</StyledButtonPlain>
+        <StyledButtonPlain onClick={()=>{handleSave(locUsrLoc); handleSaveTime()}}>Save</StyledButtonPlain>
         {saved ? <h1>Preference Saved!</h1> : null}
     </>
 }
