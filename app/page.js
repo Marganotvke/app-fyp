@@ -28,7 +28,7 @@ export default function HomePage() {
     <HomeBanner>
       <HomeRcmd items={recommend}/>
       {session ? <UsrLocRcmd/> : 
-        <h1 className="px-6 pb-6 text-3xl font-sans font-light">Login to get personalized recommendations!</h1>
+        <h1 className="px-6 pb-6 text-3xl font-sans font-light h-full">Login to get personalized recommendations!</h1>
       }
     </HomeBanner>
   </>

@@ -39,18 +39,21 @@ export default function UsrLocRcmd(){
     const session = use(getServerSession(authOptions));
     const id = session.user.id;
     const usrInfo = use(fetchUsrInfo(id));
-    if (usrInfo === "Internal Server Error" || !usrInfo){throw new Error("Internal Server Error");}
-    const attrac = use(fetchPlacesLabels(usrInfo[0].location));
-    if (attrac === "Internal Server Error" || !attrac){throw new Error("Internal Server Error");}
+    var resAttrac;
 
-    const usrRcmd = usrInfo[0].recommend;
-    var dataset = [];
-    for (var i = 0; i < attrac.length; i++) {
-        dataset.push(attrac[i].cats);
+    if(usrInfo && usrInfo[0].location){
+        const attrac = use(fetchPlacesLabels(usrInfo[0].location));
+        const usrRcmd = usrInfo[0].recommend;
+        var dataset = [];
+        for (var i = 0; i < attrac.length; i++) {
+            dataset.push(attrac[i].cats);
+        }
+        const res = findNearestNeighbors(dataset, usrRcmd, 5);
+        resAttrac = attrac.filter((x, i) => res.includes(i));
+    }else{
+        resAttrac = [];
     }
-    const res = findNearestNeighbors(dataset, usrRcmd, 5);
-    const resAttrac = attrac.filter((x, i) => res.includes(i));
-
+    
     return <>
         <UserRcmd items={resAttrac} motd={"Recommended for you"}/>
     </>

@@ -24,8 +24,10 @@ export default function SignUp( callbacks ){
       return;
     }
 
-    const { message, error, status } = await fetch('/api/register', {... formValues})
-    if(error){
+    console.log(JSON.stringify({formValues}));
+
+    const { message, error, status } = await fetch('/api/register', {method: "POST", body: JSON.stringify({formValues})});
+    if(status !== 201){
       setWarning(true);
     }else{
       setWarning(false);
