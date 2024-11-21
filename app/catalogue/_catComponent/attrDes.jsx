@@ -17,9 +17,9 @@ async function upsertSchedule(session, dates){
         .select("schedule")
         .eq("id", id)
     
-    if (data && data.length > 0){
+    if (data){
         var tmpSchedule;
-        if (data[0].schedule){
+        if (data.length > 0 && data[0].schedule){
             tmpSchedule = [...data[0].schedule, dates];
         }else{
             tmpSchedule = [dates];
@@ -30,7 +30,7 @@ async function upsertSchedule(session, dates){
             .upsert({id:id, schedule: tmpSchedule})
             .select()
 
-        if(res.status !== 201 && res.status !== 200){  
+        if(res.status !== 201 && res.status !== 200 && !res.error){  
             console.log(res);
             return -1;
         }

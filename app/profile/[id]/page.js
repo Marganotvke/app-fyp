@@ -8,7 +8,6 @@ import UserHeader from "./_userProfileComponent/userHeader";
 import StyledBarPad from "@/app/_mainStyleComponent/StyledBarPad";
 import UsrLocSelect from "./_userProfileComponent/usrLocSelect";
 import UsrLocRcmd from "./_userProfileComponent/usrLocRcmd";
-import { Router } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 export const revalidate = 0;
@@ -47,14 +46,14 @@ async function fetchUsrRcmd(session){
     }
 }
 
-async function updateUsrLoc(session, loc){
+async function upsertUsrLoc(session, loc){
     if(!session) return null;
     const id = session.user.id;
 
     const {error} = await supabase
         .from("user_info")
-        .update({id:id, location: loc})
-        .eq("id", id)
+        .upsert({id:id, location: loc})
+        .select()
 
     if(error) return error;
 }
@@ -83,9 +82,9 @@ export default function Profile( {params} ){
 
     const handleSave = async (locUsrLoc) => {
         "use server";
-        const err = await updateUsrLoc(session, locUsrLoc);
-        if(err){
-            console.log(err);
+        const {error} = await upsertUsrLoc(session, locUsrLoc);
+        if(error){
+            console.log(error);
         }else{
             var now = new Date();
             console.log(`[${now.toString()}] Request: User ${session.user.id} change location to ${locUsrLoc}`);
@@ -93,7 +92,7 @@ export default function Profile( {params} ){
         }
     }
 
-    return <div className="h-full">
+    return <div className="min-h-[calc(100vh-3.5rem)] h-full">
         <UserHeader />
         <UserSchedule schedules={res} handleClick={handleClick}/>
         <StyledBarPad />

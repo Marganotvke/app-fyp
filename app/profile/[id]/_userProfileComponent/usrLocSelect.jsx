@@ -1,11 +1,12 @@
 'use client'
 import { useState } from "react";
 import StyledButtonPlain from "@/app/_mainStyleComponent/StyledButtons";
-import { revalidatePath } from "next/cache";
 
 export default function UsrLocSelect({usrLoc, handleSave}){
     const [locUsrLoc, setLocUsrLoc] = useState(Number(usrLoc));
     const [saved, setSaved] = useState(false);
+
+    console.log(!isNaN(locUsrLoc));
 
     const handleSaveTime = () => {
         setSaved(true);
@@ -17,7 +18,7 @@ export default function UsrLocSelect({usrLoc, handleSave}){
     return <>
         <label className="block m-2 text-xl font-light">Where would you like to go?</label>
         <select id="regions" className="flex border rounded-lg p-2 mx-2 bg-slate-900" onChange={(e) => {setLocUsrLoc(Number(e.target.value))}}>
-            {locUsrLoc != null ? <option defaultValue={`${locUsrLoc}`} hidden>{locUsrLoc===0? "Hong Kong": "Taiwan"}</option> : <option defaultValue disabled hidden>Choose a region</option>}
+            {!isNaN(locUsrLoc) ? <option defaultValue={`${locUsrLoc}`} hidden>{locUsrLoc===0? "Hong Kong": "Taiwan"}</option> : <option defaultValue disabled hidden>Choose a region</option>}
             <option value='0'>Hong Kong</option>
             <option value="1">Taiwan</option>
         </select>

@@ -9,7 +9,7 @@ export default function Chat(){
     
     if (!session || session.status === "unauthenticated") {redirect("/login"); return null;}
 
-    return <>
+    return <div className="min-h-[calc(100%-3.5rem)] h-full">
         <ChatInterface session={session}/>
-    </>
+    </div>
 }

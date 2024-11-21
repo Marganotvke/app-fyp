@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/supabaseClient";
 import isEmail from "is-email";
 
 
@@ -36,7 +35,6 @@ export default function SignUp( callbacks ){
   }
 
   const handleChange = (e) => {
-    setWarning(false);
     const {name, value} = e.target;
     setFormValues({...formValues, [name]: value})
   }
@@ -45,7 +43,7 @@ export default function SignUp( callbacks ){
     <div className="flex flex-wrap h-[calc(100vh-3.75rem)] mx-auto w-full justify-center bg-center bg-cover bg-[url(https://i.natgeofe.com/n/cb873b6f-18ff-4647-8dc0-82b62e9d5849/hong-kong-travel_16x9.jpg)]">
       <div className="flex flex-wrap w-full backdrop-blur-sm items-center justify-center">
         <div className="flex border rounded-xl px-12 py-5 bg-slate-800 items-center justify-center">
-          <form onSubmit={onSubmitSignUp}>
+          <form onSubmit={onSubmitSignUp} onFocus={()=>{setWarning(false)}}>
             <div className="flex flex-col gap-8 justify-center items-center">
               <h2 className="text-2xl text-white font-bold">Welcome to FYP</h2>
               {warning? <h4 className="text-white">Please try again.</h4>: null}
