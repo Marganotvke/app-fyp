@@ -40,10 +40,10 @@ async function fetchChat(session, profile, backlog){
         "additionalProperties": false,
     }
 
-    const client = new LMStudioClient(); // use lmstudio 0.3.2
-    // const modelPath = "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf";
-    // const modelPath = "mradermacher/gemma-2-9b-it-SimPO-GGUF/gemma-2-9b-it-SimPO.Q3_K_S.gguf";
-    const modelPath = "bartowski/Ministral-8B-Instruct-2410-GGUF/Ministral-8B-Instruct-2410-Q4_K_M.gguf"
+    const client = new LMStudioClient({
+        
+    }); // use lmstudio 0.3.2
+    const modelPath = "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf";
     var model;
     try {
         model = await client.llm.get({path: modelPath}); 
